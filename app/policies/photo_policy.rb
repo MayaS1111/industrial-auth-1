@@ -20,7 +20,7 @@ class PhotoPolicy < ApplicationPolicy
   end
 
   def edit?
-    user == current_user
+    user == photo.owner
   end
 
   def update?
