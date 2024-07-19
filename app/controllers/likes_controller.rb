@@ -1,6 +1,9 @@
 class LikesController < ApplicationController
   before_action :set_like, only: %i[ show edit update destroy ]
   before_action :is_an_authorized_user, only: [:destroy, :create]
+  before_action :is_an_authorized_user, only: [:destroy, :create]
+
+  
 
   def is_an_authorized_user
     if !@like.owner.private? || @like.owner == current.user || current_user.leaders.include?(@like.owner)
@@ -67,6 +70,12 @@ class LikesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_like
       @like = Like.find(params[:id])
+    end
+
+    def is_an_authorized_user
+      if !@like.owner.private? || @like.owner == current.user || current_user.leaders.include?(@like.owner)
+        redirect_back fallback_location: root_url, alert: "Not authorized"
+      end
     end
 
     # Only allow a list of trusted parameters through.

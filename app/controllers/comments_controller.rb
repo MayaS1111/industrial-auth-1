@@ -65,6 +65,12 @@ class CommentsController < ApplicationController
       @comment = Comment.find(params[:id])
     end
 
+    def is_an_authorized_user
+      if !@like.owner.private? || @like.owner == current.user || current_user.leaders.include?(@like.owner)
+        redirect_back fallback_location: root_url, alert: "Not authorized"
+      end
+    end
+
     # Only allow a list of trusted parameters through.
     def comment_params
       params.require(:comment).permit(:author_id, :photo_id, :body)
