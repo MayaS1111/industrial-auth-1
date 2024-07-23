@@ -3,13 +3,6 @@ class LikesController < ApplicationController
   before_action :is_an_authorized_user, only: [:destroy, :create]
   before_action :is_an_authorized_user, only: [:destroy, :create]
 
-  
-
-  def is_an_authorized_user
-    if !@like.owner.private? || @like.owner == current.user || current_user.leaders.include?(@like.owner)
-      redirect_back fallback_location: root_url, alert: "Not authorized"
-    end
-  end
 
   # GET /likes or /likes.json
   def index
@@ -72,11 +65,6 @@ class LikesController < ApplicationController
       @like = Like.find(params[:id])
     end
 
-    def is_an_authorized_user
-      if !@like.owner.private? || @like.owner == current.user || current_user.leaders.include?(@like.owner)
-        redirect_back fallback_location: root_url, alert: "Not authorized"
-      end
-    end
 
     # Only allow a list of trusted parameters through.
     def like_params

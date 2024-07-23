@@ -63,11 +63,6 @@ class PhotosController < ApplicationController
     def set_photo
       @photo = Photo.find(params[:id])
     end
-    def ensure_current_user_is_owner
-      if current_user != @photo.owner
-        redirect_back(fallback_location: root_url, alert: "nice try, sucka")
-      end
-    end
 
     # Only allow a list of trusted parameters through.
     def photo_params

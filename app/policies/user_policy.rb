@@ -9,23 +9,23 @@ class UserPolicy
   def show?
     user == current_user ||
      !user.private? || 
-     user.followers.include?(current_user)
+     user.followers.include?(current_user)|| current_user.followers.include?(user)
   end
 
   def create?
     true
   end
 
-  def edit?
+  def update?
     user == current_user
   end
 
-  def update?
-    edit?
+  def edit?
+    update?
   end
 
   def destroy?
-    edit?
+    update?
   end
 
   def feed?
