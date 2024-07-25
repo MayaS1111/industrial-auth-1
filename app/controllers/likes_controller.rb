@@ -1,5 +1,8 @@
 class LikesController < ApplicationController
   before_action :set_like, only: %i[ show edit update destroy ]
+  before_action :is_an_authorized_user, only: [:destroy, :create]
+  before_action :is_an_authorized_user, only: [:destroy, :create]
+
 
   # GET /likes or /likes.json
   def index
@@ -61,6 +64,7 @@ class LikesController < ApplicationController
     def set_like
       @like = Like.find(params[:id])
     end
+
 
     # Only allow a list of trusted parameters through.
     def like_params
